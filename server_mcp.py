@@ -60,13 +60,9 @@ async def send_message(message: str) -> str:
         return "Error: Partner URL not set. Use set_partner_url first."
     
     try:
-        # For Ngrok URLs, use port 8001
+        # For Ngrok URLs, don't add port (they handle routing)
         webhook_url = partner_url
-        if 'ngrok' in webhook_url.lower():
-            # For Ngrok, assume they're using standard ports
-            if not (':8001' in webhook_url or ':443' in webhook_url or ':80' in webhook_url):
-                webhook_url += ':8001'
-        elif 'localhost' in webhook_url:
+        if 'localhost' in webhook_url:
             # For localhost, explicitly add port 8001
             if ':8001' not in webhook_url:
                 webhook_url += ':8001'
